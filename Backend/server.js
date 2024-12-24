@@ -1,18 +1,27 @@
 require('dotenv').config();// Import necessary packages
 const express = require('express');
 const mongoose = require('mongoose');
-const User = require('./models/user'); // Import the User model
+const User = require('./models/admin'); // Import the User model
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
+const connectDB = require('./config/db');
+const authRouter = require('./routes/authRoutes');
+const cors = require('cors')
+connectDB();
 
 // Load environment variables from .env file
- // This loads the variables from .env file
+// This loads the variables from .env file
 
 // Create an Express app
 const app = express();
 
+app.use(cors({ origin:"*"}));
+
 // Middleware to parse JSON bodies
 app.use(express.json());
+
+app.use('/api/auth', authRouter)
+
 
 // Signup route with validation
 app.post(
@@ -52,19 +61,6 @@ app.post(
         }
     }
 );
-
-// MongoDB connection (ensure you're using the correct URI)
-// Log the MongoDB URI to ensure it's being loaded correctly
-console.log('MongoDB URI:', process.env.MONGODB_URI); // Logs the MongoDB URI for debugging
-
-// Connect to MongoDB using the URI from the .env file
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
-        console.log('Connected to MongoDB');
-    })
-    .catch((err) => {
-        console.error('Error connecting to MongoDB:', err);
-    });
 
 // Start the server
 const PORT = process.env.PORT || 5000;
