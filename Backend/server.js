@@ -6,6 +6,9 @@ const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const connectDB = require('./config/db');
 const authRouter = require('./routes/authRoutes');
+const shelterRouter = require('./routes/shelterRoutes')
+const bankRouter=require('./routes/bankRoutes')
+const disasterRouter=require('./routes/disasterRoutes')
 const cors = require('cors')
 connectDB();
 
@@ -21,8 +24,9 @@ app.use(cors({ origin:"*"}));
 app.use(express.json());
 
 app.use('/api/auth', authRouter)
-
-
+app.use('/api/shelter', shelterRouter);
+app.use('/api/bank',bankRouter);
+app.use('/api/disaster',disasterRouter)
 // Signup route with validation
 app.post(
     '/signup',

@@ -5,6 +5,7 @@ const PostDisaster = () => {
     const [location, setLocation] = useState('');
     const [severity, setSeverity] = useState('');
     const [description, setDescription] = useState('');
+const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -15,9 +16,15 @@ const PostDisaster = () => {
                 body: JSON.stringify({ name, location, severity, description }),
             });
             const result = await response.json();
+            setMessage('Disaster added successfully!');
+            console.log(message);
             console.log('Disaster added:', result);
+            alert("Disaster Added")
         } catch (err) {
+            setMessage(`Error: ${err.message}`);
             console.error('Error adding disaster:', err);
+            alert(`Error: ${err.message}`);
+        
         }
     };
 

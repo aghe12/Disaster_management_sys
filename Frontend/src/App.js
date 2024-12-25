@@ -60,11 +60,12 @@ const App = () => {
                 <Route path="/admin/post-disaster" element={<PostDisaster />} />
                 <Route path="/admin/update-disasters" element={<UpdateDisaster />} />
                 <Route path="/admin/post-shelters" element={<PostShelter />} />
-                <Route path="/admin/update-shelter" element={<UpdateShelter />} />
+                <Route path="admin/update-shelter/:shelterId" element={<UpdateShelter/>}/>
                 <Route path="/admin/view-sources" element={<ViewSources />} />
                 <Route path="/admin/view-emergency-sources" element={<ViewEmergencySources />} />
                 <Route path="/admin/add-bank-details" element={<AddBankDetails />} />
                 <Route path="/admin/manage-bank-details" element={<ManageBankDetails />} />
+                <Route path="/edit-bank-detail/:id" element={<ManageBankDetails />}/>
                 <Route path="/admin/view-volunteers" element={<ViewVolunteers />} />
                 <Route path="/admin/view-volunteer-tasks" element={<ViewVolunteerTasks />} />
                 <Route path="/admin/view-user-details" element={<ViewUserDetails />} />

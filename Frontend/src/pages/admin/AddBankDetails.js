@@ -1,22 +1,95 @@
+// import React, { useState } from 'react';
+
+// const AddBankDetails = () => {
+//     const [bankName, setBankName] = useState('');
+//     const [accountNumber, setAccountNumber] = useState('');
+//     const [ifscCode, setIfscCode] = useState('');
+//     const [message, setMessage] = useState('');
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+//         console.log("Form submitted"); 
+//         // Validate the input fields
+//         if (!bankName || !accountNumber || !ifscCode) {
+//             setMessage('Please fill in all fields.');
+//             return;
+//         }
+
+//         try {
+//             const response = await fetch('http://localhost:5000/api/bank/add', {
+//                 method: 'POST',
+//                 headers: { 'Content-Type': 'application/json' },
+//                 body: JSON.stringify({ bankName, accountNumber, ifscCode }),
+//             });
+
+//             if (!response.ok) {
+//                 const errorData = await response.json();
+//                 throw new Error(errorData.message || 'Failed to add bank details');
+                
+//             }
+
+//             const result = await response.json();
+//             setMessage('Bank details added successfully!');
+//             console.log(message)
+//             setBankName('');
+//             setAccountNumber('');
+//             setIfscCode('');
+//             console.log('Bank details added:', result);
+//             alert("Bank details added successfully")
+//         } catch (err) {
+//             setMessage(`Error: ${err.message}`);
+//             console.error('Error adding bank details:', err);
+           
+//         }
+//     };
+
 import React, { useState } from 'react';
 
 const AddBankDetails = () => {
     const [bankName, setBankName] = useState('');
     const [accountNumber, setAccountNumber] = useState('');
     const [ifscCode, setIfscCode] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log("Form submitted");
+
+        // Validate the input fields
+        if (!bankName || !accountNumber || !ifscCode) {
+            setMessage('Please fill in all fields.');
+            alert('Please fill in all fields.');  // Alert if fields are missing
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:5000/api/bank/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ bankName, accountNumber, ifscCode }),
             });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Account number already exists');
+            }
+
             const result = await response.json();
+            setMessage('Bank details added successfully!');
+            console.log(message);
+            setBankName('');
+            setAccountNumber('');
+            setIfscCode('');
             console.log('Bank details added:', result);
+
+            // Display success alert
+            alert("Bank details added successfully");
         } catch (err) {
+            setMessage(`Error: ${err.message}`);
             console.error('Error adding bank details:', err);
+
+            // Display error alert
+            alert(`Error: ${err.message}`);
         }
     };
 
@@ -53,6 +126,7 @@ const AddBankDetails = () => {
                 </label>
                 <button type="submit" style={styles.submitButton}>
                     Submit
+                    
                 </button>
             </form>
         </div>
