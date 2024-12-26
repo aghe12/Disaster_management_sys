@@ -85,32 +85,21 @@ const Dashboard = () => {
         transform: 'translateY(-6px)',
         boxShadow: '0 8px 16px rgba(0, 0, 0, 0.2)',
     };
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
 
     return (
         <div style={containerStyle}>
             <h1 style={headerStyle}>Volunteer Dashboard</h1>
-            <button
-                onClick={logout}
-                style={{
-                    padding: "12px 20px",
-                    backgroundColor: "#cc0000",
-                    color: "white",
-                    fontSize: "1.2rem",
-                    borderRadius: "8px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginBottom: "20px",
-                }}
-            >
-                Logout
-            </button>
+            
             <div style={dashboardOptionsStyle}>
-                <Link to="/volunteer/contact-admin" style={linkStyle}>Contact Admin</Link>
-                <Link to="/volunteer/edit-profile" style={linkStyle}>Edit Profile</Link>
-                <Link to="/volunteer/submit-report" style={linkStyle}>Submit Report</Link>
-                <Link to="/volunteer/update-task-status" style={linkStyle}>Update Task Status</Link>
-                <Link to="/volunteer/view-shelters" style={linkStyle}>View Shelters</Link>
-                <Link to="/volunteer/profile" style={linkStyle}>Volunteer Profile</Link>
+               <div style={linkStyle} onClick={() => handleNavigation('/volunteer/contact-admin')}>Contact Admin</div>
+
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/submit-report')}>Submit Report</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/update-task-status')}>Update Task Status</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/view-shelters')}>View Shelters</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/profile')}>Volunteer Profile</div>
             </div>
 
             {/* Inline the keyframes */}
@@ -145,6 +134,21 @@ const Dashboard = () => {
                     }
                 `}
             </style>
+            <button
+                onClick={logout}
+                style={{
+                    padding: "12px 20px",
+                    backgroundColor: "#cc0000",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    borderRadius: "8px",
+                    border: "none",
+                    cursor: "pointer",
+                    marginBottom: "20px",
+                }}
+            >
+                Logout
+            </button>
         </div>
     );
 };

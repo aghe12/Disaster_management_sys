@@ -28,7 +28,7 @@ import UpdateTaskStatus from "./pages/volunteer/UpdateTaskStatus";
 import VolunteerViewShelters from "./pages/volunteer/ViewShelters";  // Renamed for volunteer
 import SubmitReport from "./pages/volunteer/SubmitReport";
 import VolunteerProfile from "./pages/volunteer/VolunteerProfile";
-import EditProfile from "./pages/volunteer/EditProfile";
+
 import ContactAdmin from "./pages/volunteer/ContactAdmin";
 
 // User Pages
@@ -76,7 +76,7 @@ const App = () => {
                 <Route path="/volunteer/view-shelters" element={<VolunteerViewShelters />} />
                 <Route path="/volunteer/submit-report" element={<SubmitReport />} />
                 <Route path="/volunteer/profile" element={<VolunteerProfile />} />
-                <Route path="/volunteer/edit-profile" element={<EditProfile />} />
+
                 <Route path="/volunteer/contact-admin" element={<ContactAdmin />} />
 
                 {/* User Routes */}

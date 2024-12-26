@@ -1,34 +1,4 @@
-// const mongoose = require('mongoose');
 
-// const ShelterSchema = new mongoose.Schema({
-//     name: {
-//         type: String,
-//         required: true,
-//         trim: true,
-//     },
-//     location: {
-//         type: String,
-//         required: true,
-//     },
-//     capacity: {
-//         type: Number,
-//         required: true,
-//     },
-//     availableSpace: {
-//         type: Number,
-//         required: true,
-//     },
-//     contact: {
-//         type: String,
-//         required: true,
-//     },
-//     createdAt: {
-//         type: Date,
-//         default: Date.now,
-//     },
-// });
-
-// module.exports = mongoose.model('Shelter', ShelterSchema);
 const mongoose = require('mongoose');
 
 const ShelterSchema = new mongoose.Schema({

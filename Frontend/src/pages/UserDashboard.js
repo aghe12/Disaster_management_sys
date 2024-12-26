@@ -79,34 +79,23 @@ const Dashboard = () => {
         opacity: isLoaded ? 1 : 0,
         animation: isLoaded ? `fadeIn 1s ease-out forwards ${index * 0.2}s` : 'none', // Delay based on index
     });
-
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
     return (
         <div style={containerStyle}>
             <h1 style={headerStyle}>User Dashboard</h1>
-            <button
-                onClick={logout}
-                style={{
-                    padding: "12px 20px",
-                    backgroundColor: "#cc0000",
-                    color: "white",
-                    fontSize: "1.2rem",
-                    borderRadius: "8px",
-                    border: "none",
-                    cursor: "pointer",
-                    marginBottom: "20px",
-                }}
-            >
-                Logout
-            </button>
+            
             <div style={dashboardOptionsStyle}>
-                <Link to="/user/view-disasters" style={linkStyle(0)}>View Disasters</Link>
-                <Link to="/user/view-shelters" style={linkStyle(1)}>View Shelters</Link>
-                <Link to="/user/post-sos" style={linkStyle(2)}>Post SOS</Link>
-                <Link to="/user/view-sos" style={linkStyle(3)}>View SOS</Link>
-                <Link to="/user/post-incident" style={linkStyle(4)}>Post Incident</Link>
-                <Link to="/user/manage-incident" style={linkStyle(5)}>Manage Incident</Link>
-                <Link to="/user/post-resource" style={linkStyle(6)}>Post Resource</Link>
-                <Link to="/user/manage-resource" style={linkStyle(7)}>Manage Resource</Link>
+            <div style={linkStyle(0)} onClick={() => handleNavigation('/user/view-disasters')}>View Disasters</div>
+            <div style={linkStyle(1)} onClick={() => handleNavigation('/user/view-shelters')}>View Shelters</div>
+            <div style={linkStyle(2)} onClick={() => handleNavigation('/user/post-sos')}>Post SOS</div>
+            <div style={linkStyle(3)} onClick={() => handleNavigation('/user/view-sos')}>View SOS</div>
+            <div style={linkStyle(4)} onClick={() => handleNavigation('/user/post-incident')}>Post Incident</div>
+            <div style={linkStyle(5)} onClick={() => handleNavigation('/user/manage-incident')}>Manage Incident</div>
+            <div style={linkStyle(6)} onClick={() => handleNavigation('/user/post-resource')}>Post Resource</div>
+            <div style={linkStyle(7)} onClick={() => handleNavigation('/user/manage-resource')}>Manage Resource</div>
+                
             </div>
 
             {/* Inline the keyframes */}
@@ -141,6 +130,21 @@ const Dashboard = () => {
                     }
                 `}
             </style>
+            <button
+                onClick={logout}
+                style={{
+                    padding: "12px 20px",
+                    backgroundColor: "#cc0000",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    borderRadius: "8px",
+                    border: "none",
+                    cursor: "pointer",
+                    marginBottom: "20px",
+                }}
+            >
+                Logout
+            </button>
         </div>
     );
 };
