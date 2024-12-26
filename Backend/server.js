@@ -5,7 +5,7 @@ const User = require('./models/admin'); // Import the User model
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const connectDB = require('./config/db');
-const authRouter = require('./routes/authRoutes');
+const authRoutes = require('./routes/authRoutes');
 const shelterRouter = require('./routes/shelterRoutes')
 const bankRouter=require('./routes/bankRoutes')
 const disasterRouter=require('./routes/disasterRoutes')
@@ -23,7 +23,7 @@ app.use(cors({ origin:"*"}));
 // Middleware to parse JSON bodies
 app.use(express.json());
 
-app.use('/api/auth', authRouter)
+app.use('/api/auth', authRoutes)
 app.use('/api/shelter', shelterRouter);
 app.use('/api/bank',bankRouter);
 app.use('/api/disaster',disasterRouter)

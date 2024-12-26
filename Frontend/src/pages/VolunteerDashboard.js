@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 const Dashboard = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
-
-    useEffect(() => {
-        // Set loaded to true after the component mounts, ensuring animation triggers
-        setIsLoaded(true);
-    }, []);
+    const navigate = useNavigate();
+        const [isLoaded, setIsLoaded] = useState(false);  // For animation effect
+    
+        useEffect(() => {
+            const token = localStorage.getItem('authToken');
+            if (!token) {
+                // If there's no token, redirect to login
+                navigate('/login');
+            } else {
+                // If token exists, mark the dashboard as loaded for animation
+                setIsLoaded(true);
+            }
+        }, [navigate]);
+    
+        const logout = () => {
+            localStorage.removeItem('authToken');  // Remove token from localStorage
+            navigate('/login');  // Redirect to login page
+        };
+    
+    
 
     const containerStyle = {
         padding: '4rem',
@@ -75,6 +89,21 @@ const Dashboard = () => {
     return (
         <div style={containerStyle}>
             <h1 style={headerStyle}>Volunteer Dashboard</h1>
+            <button
+                onClick={logout}
+                style={{
+                    padding: "12px 20px",
+                    backgroundColor: "#cc0000",
+                    color: "white",
+                    fontSize: "1.2rem",
+                    borderRadius: "8px",
+                    border: "none",
+                    cursor: "pointer",
+                    marginBottom: "20px",
+                }}
+            >
+                Logout
+            </button>
             <div style={dashboardOptionsStyle}>
                 <Link to="/volunteer/contact-admin" style={linkStyle}>Contact Admin</Link>
                 <Link to="/volunteer/edit-profile" style={linkStyle}>Edit Profile</Link>

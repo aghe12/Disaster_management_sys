@@ -31,6 +31,7 @@ const AdminSignup = () => {
         email: "",
         password: "",
         confirmPassword: "",
+        userType:"admin",
     });
 
     const handleChange = (e) => {
@@ -47,7 +48,7 @@ const AdminSignup = () => {
 
         try {
             const { email,name,password} = formData
-            const response = await axios.post("http://localhost:5000/api/auth/signup", {
+            const response = await axios.post("http://localhost:5000/api/auth/signup/admin", {
                 email,username:name,password,userType:"admin"
             });
             alert(response.data.message);

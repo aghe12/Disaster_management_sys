@@ -193,13 +193,14 @@ router.put('/api/shelter/update/:id', upload.single('image'), async (req, res) =
 });
 
 // Route to GET (List All Shelters)
-router.get('/', async (req, res) => {
+router.get('/api/shelters', async (req, res) => {
     try {
+        // Fetch all shelters from the database
         const shelters = await Shelter.find();
-        res.status(200).json({ message: 'Shelters fetched successfully!', data: shelters });
+        res.json(shelters);  // Return shelter data as JSON
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error fetching shelters', error });
+        console.error("Error fetching shelters:", error);
+        res.status(500).json({ message: "Error fetching shelters" });
     }
 });
 

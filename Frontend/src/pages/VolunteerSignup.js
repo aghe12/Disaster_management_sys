@@ -152,8 +152,8 @@ const VolunteerSignup = () => {
 
         try {
             const { email,name,password} = formData
-            const response = await axios.post("http://localhost:5000/api/auth/signup", {
-                email,username:name,password,userType:"admin"
+            const response = await axios.post("http://localhost:5000/api/auth/signup/volunteer", {
+                email,username:name,password,userType:"volunteer"
             });
             alert(response.data.message);
             setFormData({ name: "", email: "", password: "", confirmPassword: "" }); // Reset form after submission

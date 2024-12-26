@@ -1,7 +1,25 @@
+// const express = require('express');
+// const { signup } = require('../controllers/authController');
+// const authRouter = express.Router();
+
+// authRouter.post('/signup', signup);
+
+// module.exports = authRouter;
+
+
+
 const express = require('express');
-const { signup } = require('../controllers/authController');
-const authRouter = express.Router();
+const { signupAdmin, signupVolunteer, signupUser,login } = require('../controllers/authController');
+const router = express.Router();
 
-authRouter.post('/signup', signup);
+// Admin signup route
+router.post('/signup/admin', signupAdmin);
 
-module.exports = authRouter;
+// Volunteer signup route
+router.post('/signup/volunteer', signupVolunteer);
+
+// User signup route
+router.post('/signup/user', signupUser);
+router.post('/login', login);
+
+module.exports = router;
