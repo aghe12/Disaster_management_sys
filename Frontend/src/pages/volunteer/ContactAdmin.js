@@ -3,10 +3,30 @@ import React, { useState } from 'react';
 const ContactAdmin = () => {
     const [message, setMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Message sent to admin:', message);
-        // Logic to send message to the admin
+
+        // Send the message to the backend API
+        try {
+            const response = await fetch('http://localhost:5000/api/contact/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message }),
+            });
+
+            const data = await response.json();
+
+            if (response.status === 200) {
+                alert('Message sent to admin successfully!');
+            } else {
+                alert(data.error || 'Failed to send message. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            alert('An error occurred while sending your message. Please try again later.');
+        }
     };
 
     const styles = {
@@ -16,7 +36,7 @@ const ContactAdmin = () => {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh',
-            backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-soft-colorful-watercolor-texture-background-design_1055-13589.jpg?semt=ais_hybrid")', // Replace with your background image
+            backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-soft-colorful-watercolor-texture-background-design_1055-13589.jpg?semt=ais_hybrid")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             padding: '20px',

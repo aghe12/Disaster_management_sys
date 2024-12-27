@@ -77,13 +77,14 @@ const AdminDashboard = () => {
             <div style={linkStyle(1)} onClick={() => handleNavigation('/admin/manage-bank-details')}>Manage Bank Details</div>
             <div style={linkStyle(2)} onClick={() => handleNavigation('/admin/post-disaster')}>Post Disasters</div>
             <div style={linkStyle(3)} onClick={() => handleNavigation('/admin/post-shelters')}>Post Shelters</div>
-            <div style={linkStyle(4)} onClick={() => handleNavigation('/admin/update-disasters')}>Update Disaster</div>
-            <div style={linkStyle(5)} onClick={() => handleNavigation('/admin/update-shelter/:shelterId')}>Update Shelter</div>
-            <div style={linkStyle(6)} onClick={() => handleNavigation('/admin/view-emergency-sources')}>View Emergency Sources</div>
-            <div style={linkStyle(7)} onClick={() => handleNavigation('/admin/view-user-details')}>View User Details</div>
+            <div style={linkStyle(2)} onClick={() => handleNavigation('/user/post-sos')}>View Source</div>
+            <div style={linkStyle(5)} onClick={() => handleNavigation('/admin/updateshelter')}>Update Shelter</div>
+            <div style={linkStyle(6)} onClick={() => handleNavigation('/admin/view-emergency-sources')}>View Emergency contacts</div>
+            <div style={linkStyle(7)} onClick={() => handleNavigation('/admin/viewreports')}>View Reports</div>
             <div style={linkStyle(8)} onClick={() => handleNavigation('/admin/view-volunteers')}>View Volunteers</div>
-            <div style={linkStyle(9)} onClick={() => handleNavigation('/admin/view-volunteer-tasks')}>View Volunteer Tasks</div>
-
+            <div style={linkStyle(9)} onClick={() => handleNavigation('/admin/add-volunteer-tasks')}>Add Volunteer Tasks</div>
+            <div style={linkStyle(9)} onClick={() => handleNavigation('/admin/view-sources')}>Add sources</div>
+            <div style={linkStyle(10)} onClick={() => handleNavigation('/volunteer/viewincidents')}>View Incident</div>
             {/* Inline keyframes */}
             <style>
                 {`

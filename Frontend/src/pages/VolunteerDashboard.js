@@ -95,11 +95,15 @@ const Dashboard = () => {
             
             <div style={dashboardOptionsStyle}>
                <div style={linkStyle} onClick={() => handleNavigation('/volunteer/contact-admin')}>Contact Admin</div>
-
+               <div style={linkStyle} onClick={() => handleNavigation('/volunteer/view-disasters')}>View Disaster</div>
             <div style={linkStyle} onClick={() => handleNavigation('/volunteer/submit-report')}>Submit Report</div>
             <div style={linkStyle} onClick={() => handleNavigation('/volunteer/update-task-status')}>Update Task Status</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/post-shelters')}>Post shelter</div>
             <div style={linkStyle} onClick={() => handleNavigation('/volunteer/view-shelters')}>View Shelters</div>
             <div style={linkStyle} onClick={() => handleNavigation('/volunteer/profile')}>Volunteer Profile</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/updateresources')}>Update Resources</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/admin/updateshelter')}>Update Shelter</div>
+            <div style={linkStyle} onClick={() => handleNavigation('/volunteer/viewincidents')}>View Incident</div>
             </div>
 
             {/* Inline the keyframes */}

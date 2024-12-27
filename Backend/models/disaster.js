@@ -18,6 +18,8 @@ const disasterSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    image: String, 
+   
 }, {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
 });

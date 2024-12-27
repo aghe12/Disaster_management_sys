@@ -2,9 +2,9 @@ const BankDetails = require('../models/bankdetails');
 
 // Add a new bank detail
 exports.addBankDetail = async (req, res) => {
-    const { bankName, accountNumber, ifscCode } = req.body;
+    const { bankName,accountholderName ,accountNumber, ifscCode } = req.body;
 
-    if (!bankName || !accountNumber || !ifscCode) {
+    if (!bankName ||!accountholderName|| !accountNumber || !ifscCode) {
         return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -14,7 +14,7 @@ exports.addBankDetail = async (req, res) => {
             return res.status(400).json({ error: 'Account number already exists' });
         }
 
-        const newBankDetail = new BankDetails({ bankName, accountNumber, ifscCode });
+        const newBankDetail = new BankDetails({ bankName,accountholderName, accountNumber, ifscCode });
         await newBankDetail.save();
         res.status(201).json({ message: 'Bank detail added successfully', data: newBankDetail });
     } catch (error) {
@@ -37,12 +37,12 @@ exports.getAllBankDetails = async (req, res) => {
 // Update a bank detail
 exports.updateBankDetail = async (req, res) => {
     const { id } = req.params;
-    const { bankName, accountNumber, ifscCode } = req.body;
+    const { bankName, accountholderName,accountNumber, ifscCode } = req.body;
 
     try {
         const updatedBankDetail = await BankDetails.findByIdAndUpdate(
             id,
-            { bankName, accountNumber, ifscCode },
+            { bankName, accountholderName,accountNumber, ifscCode },
             { new: true }
         );
 

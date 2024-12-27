@@ -89,12 +89,12 @@ const Dashboard = () => {
             <div style={dashboardOptionsStyle}>
             <div style={linkStyle(0)} onClick={() => handleNavigation('/user/view-disasters')}>View Disasters</div>
             <div style={linkStyle(1)} onClick={() => handleNavigation('/user/view-shelters')}>View Shelters</div>
-            <div style={linkStyle(2)} onClick={() => handleNavigation('/user/post-sos')}>Post SOS</div>
-            <div style={linkStyle(3)} onClick={() => handleNavigation('/user/view-sos')}>View SOS</div>
+            <div style={linkStyle(2)} onClick={() => handleNavigation('/user/post-sos')}>View Source</div>
+            <div style={linkStyle(3)} onClick={() => handleNavigation('/user/view-sos')}>View bankdetails</div>
             <div style={linkStyle(4)} onClick={() => handleNavigation('/user/post-incident')}>Post Incident</div>
             <div style={linkStyle(5)} onClick={() => handleNavigation('/user/manage-incident')}>Manage Incident</div>
-            <div style={linkStyle(6)} onClick={() => handleNavigation('/user/post-resource')}>Post Resource</div>
-            <div style={linkStyle(7)} onClick={() => handleNavigation('/user/manage-resource')}>Manage Resource</div>
+            <div style={linkStyle(6)} onClick={() => handleNavigation('/user/post-resource')}>Add Source</div>
+            <div style={linkStyle(6)} onClick={() => handleNavigation('/user/emergency-contact')}>Add emergency contacts</div>
                 
             </div>
 

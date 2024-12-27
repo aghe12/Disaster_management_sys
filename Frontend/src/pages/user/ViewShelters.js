@@ -3,30 +3,26 @@
 
 
 import React, { useState, useEffect } from 'react';
-
+import axios from 'axios';
 const ViewShelter = () => {
     const [shelters, setShelters] = useState([]);
     const [error, setError] = useState('');
-
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
         // Fetch shelter data from the API
         const fetchShelters = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/shelters'); // Replace with your API URL
-                if (!response.ok) {
-                    throw new Error('Failed to fetch shelters');
-                }
-                const data = await response.json();
-                setShelters(data);  // Set the fetched shelters data
+                const response = await axios.get('http://localhost:5000/api/shelter/all');
+                setShelters(response.data);
+                setLoading(false);
             } catch (err) {
-                setError('Error fetching shelters. Please try again later.');
-                console.error('Error fetching shelters:', err);
+                setError('Failed to load shelters');
+                setLoading(false);
             }
         };
 
         fetchShelters();
-    }, []);
-
+    },[]);
     return (
         <div style={styles.container}>
             <div style={styles.shelterContainer}>
@@ -108,7 +104,7 @@ const styles = {
         color: '#333',
     },
     shelterDetails: {
-        fontSize: '14px',
+        fontSize: '10px',
         color: '#666',
         textAlign: 'left',
     },

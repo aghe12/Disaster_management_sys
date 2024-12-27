@@ -11,7 +11,7 @@ const {
 router.post('/add', addBankDetail);
 
 // Route to get all bank details
-router.get('/', getAllBankDetails);
+router.get('/all', getAllBankDetails);
 
 // Route to update a bank detail
 router.put('/:id', updateBankDetail);

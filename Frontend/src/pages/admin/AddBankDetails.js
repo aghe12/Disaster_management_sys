@@ -7,13 +7,13 @@ const AddBankDetails = () => {
     const [accountNumber, setAccountNumber] = useState('');
     const [ifscCode, setIfscCode] = useState('');
     const [message, setMessage] = useState('');
-
+const[accountholderName,setAccountholderName]=useState('');
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("Form submitted");
 
         // Validate the input fields
-        if (!bankName || !accountNumber || !ifscCode) {
+        if (!bankName ||!accountholderName|| !accountNumber || !ifscCode) {
             setMessage('Please fill in all fields.');
             alert('Please fill in all fields.');  // Alert if fields are missing
             return;
@@ -23,7 +23,7 @@ const AddBankDetails = () => {
             const response = await fetch('http://localhost:5000/api/bank/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ bankName, accountNumber, ifscCode }),
+                body: JSON.stringify({ bankName, accountholderName,accountNumber, ifscCode }),
             });
 
             if (!response.ok) {
@@ -36,6 +36,7 @@ const AddBankDetails = () => {
             console.log(message);
             setBankName('');
             setAccountNumber('');
+            setAccountholderName('')
             setIfscCode('');
             console.log('Bank details added:', result);
 
@@ -61,6 +62,15 @@ const AddBankDetails = () => {
                         type="text"
                         value={bankName}
                         onChange={(e) => setBankName(e.target.value)}
+                    />
+                </label>
+                <label style={styles.label}>
+                    Accountholder Name:
+                    <input
+                        style={styles.input}
+                        type="text"
+                        value={accountholderName}
+                        onChange={(e) => setAccountholderName(e.target.value)}
                     />
                 </label>
                 <label style={styles.label}>

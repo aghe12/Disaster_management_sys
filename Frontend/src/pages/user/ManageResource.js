@@ -1,14 +1,37 @@
 import React, { useState } from 'react';
+import axios from 'axios'; // Import axios to make HTTP requests
 
 const ManageResource = () => {
     const [resourceName, setResourceName] = useState('');
     const [quantity, setQuantity] = useState('');
     const [description, setDescription] = useState('');
+    const [message, setMessage] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Resource Details:', { resourceName, quantity, description });
-        // You can send this data to the server here
+        
+        // Prepare the resource data
+        const resourceData = {
+            resourceName,
+            quantity,
+            description
+        };
+
+        try {
+            // Sending the data to the backend API
+            const response = await axios.post('http://localhost:5000/api/resources', resourceData);
+            // Handle success response
+            setMessage('Resource submitted successfully!');
+            alert('Resource submitted successfully!');
+            // Reset form fields
+            setResourceName('');
+            setQuantity('');
+            setDescription('');
+        } catch (error) {
+            // Handle error response
+            setMessage('Error submitting resource.');
+            alert('Error submitting resource. Please try again.');
+        }
     };
 
     return (
@@ -47,6 +70,7 @@ const ManageResource = () => {
                     </div>
                     <button type="submit" style={styles.submitButton}>Submit Resource</button>
                 </form>
+                {message && <div style={styles.message}>{message}</div>}
             </div>
         </div>
     );
@@ -58,7 +82,7 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center',
         height: '100vh',
-        backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-soft-colorful-watercolor-texture-background-design_1055-13589.jpg?semt=ais_hybrid")', // Replace with your background image URL
+        backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-soft-colorful-watercolor-texture-background-design_1055-13589.jpg?semt=ais_hybrid")', 
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         padding: '20px',
@@ -121,6 +145,11 @@ const styles = {
         cursor: 'pointer',
         fontSize: '16px',
         transition: 'background-color 0.3s ease-in-out',
+    },
+    message: {
+        marginTop: '20px',
+        color: '#4CAF50',
+        fontWeight: 'bold',
     },
 };
 

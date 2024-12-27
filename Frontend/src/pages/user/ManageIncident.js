@@ -1,151 +1,98 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const ManageIncident = () => {
-    const [incidentType, setIncidentType] = useState('');
-    const [description, setDescription] = useState('');
-    const [priority, setPriority] = useState('');
+const ManageIncidents = () => {
+  const [incidents, setIncidents] = useState([]);
+  const [incidentData, setIncidentData] = useState({
+    incidentType: '',
+    description: '',
+    severity: '',
+  });
+  const [successMessage, setSuccessMessage] = useState('');
+  const [error, setError] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log('Incident Details:', { incidentType, description, priority });
-        // You can send this data to the server here
-    };
+  // Fetch incidents
+  const fetchIncidents = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/incidents');
+      setIncidents(response.data);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to fetch incidents.');
+    }
+  };
 
-    return (
-        <div style={styles.container}>
-            <div style={styles.formContainer}>
-                <h2 style={styles.title}>Manage Incident</h2>
-                <form onSubmit={handleSubmit} style={styles.form}>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Incident Type:</label>
-                        <input
-                            type="text"
-                            value={incidentType}
-                            onChange={(e) => setIncidentType(e.target.value)}
-                            style={styles.input}
-                            required
-                        />
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Description:</label>
-                        <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            style={styles.textarea}
-                            required
-                        />
-                    </div>
-                    <div style={styles.inputGroup}>
-                        <label style={styles.label}>Priority Level:</label>
-                        <select
-                            value={priority}
-                            onChange={(e) => setPriority(e.target.value)}
-                            style={styles.select}
-                            required
-                        >
-                            <option value="">Select Priority</option>
-                            <option value="High">High</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
-                    </div>
-                    <button type="submit" style={styles.submitButton}>
-                        Submit Incident
-                    </button>
-                </form>
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    fetchIncidents();
+  }, []);
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/incidents', incidentData);
+      setSuccessMessage(response.data.message);
+      setIncidentData({ incidentType: '', description: '', severity: '' });
+      fetchIncidents(); // Refresh the list
+    } catch (err) {
+      console.error(err);
+      setError('Failed to create incident.');
+    }
+  };
+
+  // Handle input change
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setIncidentData({ ...incidentData, [name]: value });
+  };
+
+  return (
+    <div>
+      <h1>Manage Incidents</h1>
+      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
+      
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="incidentType"
+          placeholder="Incident Type"
+          value={incidentData.incidentType}
+          onChange={handleInputChange}
+          required
+        />
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={incidentData.description}
+          onChange={handleInputChange}
+          required
+        ></textarea>
+        <select
+          name="severity"
+          value={incidentData.severity}
+          onChange={handleInputChange}
+          required
+        >
+          <option value="">Select Severity</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <button type="submit">Create Incident</button>
+      </form>
+
+      <h2>Existing Incidents</h2>
+      <ul>
+        {incidents.map((incident) => (
+          <li key={incident._id}>
+            <strong>{incident.incidentType}</strong> - {incident.description} ({incident.severity})
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
-const styles = {
-    container: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundImage: 'url("https://img.freepik.com/free-vector/abstract-soft-colorful-watercolor-texture-background-design_1055-13589.jpg?semt=ais_hybrid")', // Replace with your background image URL
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        padding: '20px',
-    },
-    formContainer: {
-        backgroundColor: 'rgba(255, 255, 255, 0.9)', // Slight transparency for form background
-        padding: '40px',
-        borderRadius: '10px',
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-        width: '100%',
-        maxWidth: '600px',
-        textAlign: 'center',
-    },
-    title: {
-        fontSize: '24px',
-        fontWeight: 'bold',
-        color: '#333',
-        marginBottom: '20px',
-    },
-    form: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-    },
-    inputGroup: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'flex-start',
-    },
-    label: {
-        fontSize: '16px',
-        color: '#333',
-        marginBottom: '5px',
-    },
-    input: {
-        width: '100%',
-        padding: '12px',
-        fontSize: '16px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
-        backgroundColor: '#f9f9f9',
-        marginBottom: '10px',
-        outline: 'none',
-        transition: 'border-color 0.3s ease-in-out',
-    },
-    textarea: {
-        width: '100%',
-        padding: '12px',
-        fontSize: '16px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
-        backgroundColor: '#f9f9f9',
-        marginBottom: '10px',
-        outline: 'none',
-        transition: 'border-color 0.3s ease-in-out',
-        minHeight: '100px',
-    },
-    select: {
-        width: '100%',
-        padding: '12px',
-        fontSize: '16px',
-        border: '1px solid #ccc',
-        borderRadius: '5px',
-        backgroundColor: '#f9f9f9',
-        marginBottom: '10px',
-        outline: 'none',
-        transition: 'border-color 0.3s ease-in-out',
-    },
-    submitButton: {
-        padding: '14px 20px',
-        backgroundColor: '#4CAF50',
-        color: '#fff',
-        border: 'none',
-        borderRadius: '5px',
-        cursor: 'pointer',
-        fontSize: '16px',
-        transition: 'background-color 0.3s ease-in-out',
-    },
-    submitButtonHover: {
-        backgroundColor: '#45a049',
-    },
-};
-
-export default ManageIncident;
+export default ManageIncidents;

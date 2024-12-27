@@ -4,9 +4,9 @@ const express = require('express');
 const Shelter = require('../models/shelter');
 const multer = require('multer'); // For handling image uploads
 const path = require('path');
-
+const{updateShelter}=require('../controllers/shelterController');
 const router = express.Router();
-
+const shelterController = require('../controllers/shelterController');
 // Set up Multer for image uploads
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -55,46 +55,9 @@ router.post('/add', upload.single('image'), async (req, res) => {
 });
 
 // Route to UPDATE (Update Shelter)
-router.put('/api/shelter/update/:id', upload.single('image'), async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { name, location, capacity, availableSpace, contact, coordinates } = req.body;
-
-        if (!name || !location || !capacity || !availableSpace || !contact || !coordinates) {
-            return res.status(400).json({ message: 'All fields are required!' });
-        }
-
-        // Handle image upload (if new image is uploaded)
-        const image = req.file ? req.file.path : null;
-
-        // Update shelter in database
-        const updatedShelter = await Shelter.findByIdAndUpdate(
-            id,
-            {
-                name,
-                location,
-                capacity,
-                availableSpace,
-                contact,
-                coordinates,
-                image: image || undefined, // Only update image if new one is provided
-            },
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedShelter) {
-            return res.status(404).json({ message: 'Shelter not found' });
-        }
-
-        res.status(200).json({ message: 'Shelter updated successfully!', data: updatedShelter });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error updating shelter', error });
-    }
-});
-
+router.put('/update/:id', shelterController.updateShelter);
 // Route to GET (List All Shelters)
-router.get('/api/shelters', async (req, res) => {
+router.get('/all', async (req, res) => {
     try {
         // Fetch all shelters from the database
         const shelters = await Shelter.find();

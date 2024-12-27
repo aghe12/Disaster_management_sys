@@ -23,27 +23,34 @@ const addShelter = async (req, res) => {
 };
 
 // Update Shelter
+// Update shelter details
 const updateShelter = async (req, res) => {
+    const { id } = req.params;
+    const { name, location, capacity, availableSpace, contact, latitude, longitude } = req.body;
+    const image = req.file ? req.file.path : null;
+
     try {
-        const { id } = req.params;
-        const { name, location, capacity, availableSpace, contact } = req.body;
-
-        const updatedShelter = await Shelter.findByIdAndUpdate(
-            id,
-            { name, location, capacity, availableSpace, contact },
-            { new: true } // Return the updated document
-        );
-
-        if (!updatedShelter) {
+        const shelter = await Shelter.findById(id);
+        if (!shelter) {
             return res.status(404).json({ message: 'Shelter not found' });
         }
 
-        res.status(200).json({ message: 'Shelter updated successfully!', data: updatedShelter });
+        shelter.name = name || shelter.name;
+        shelter.location = location || shelter.location;
+        shelter.capacity = capacity || shelter.capacity;
+        shelter.availableSpace = availableSpace || shelter.availableSpace;
+        shelter.contact = contact || shelter.contact;
+        shelter.latitude = latitude || shelter.latitude;
+        shelter.longitude = longitude || shelter.longitude;
+        if (image) shelter.image = image;
+
+        await shelter.save();
+        res.status(200).json({ message: 'Shelter updated successfully', shelter });
     } catch (error) {
-        console.error('Error updating shelter:', error);
         res.status(500).json({ message: 'Error updating shelter', error });
     }
 };
+
 
 // Get All Shelters
 const getAllShelters = async (req, res) => {
